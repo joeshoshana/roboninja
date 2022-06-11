@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- This file is a placeholder which is included by default from
+       ridgeback.urdf.xacro. If a robot is being customized and requires
+       additional URDF, set the RIDGEBACK_URDF_EXTRAS environment variable
+       to the full path of the file you would like included. -->
+
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+
+  <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
+
+
+  <xacro:macro name="sick_lms1xx_mount" params="prefix topic location">
+
+    <xacro:sick_lms1xx frame="${prefix}_laser" topic="${topic}" update_rate="20"
+                       min_angle="-${M_PI}" max_angle="${M_PI}"
+                       min_range="0.45" robot_namespace="$(arg namespace)" />
+
+    <joint name="${prefix}_laser_joint" type="fixed">
+      <!-- This offset is from the base of the bracket to the LIDAR's focal point. -->
+      <origin xyz="${location * 0.3999} 0 0.3" rpy="0 0 0" />
+      <parent link="chassis_link" />
+      <child link="${prefix}_laser" />
+    </joint>
+
+  </xacro:macro>
+
+  <xacro:sick_lms1xx_mount prefix="center"
+                             topic="scan"
+                             location="0" />
+
+  <xacro:if value="$(optenv JACKAL_FLEA3 1)">
+  <xacro:include filename="accessories/camera_mount.urdf.xacro" />
+  <xacro:include filename="$(find pointgrey_camera_description)/urdf/pointgrey_flea3.urdf.xacro" />
+
+    <xacro:camera_mount prefix="$(optenv JACKAL_FLEA_MOUNT front)"
+                       tilt="$(optenv JACKAL_FLEA_TILT 0)"/>
+    <joint name="$(optenv JACKAL_FLEA3_MOUNT front)_camera_mount_joint" type="fixed">
+      <origin xyz="$(optenv JACKAL_FLEA3_OFFSET -0.13 -0.01 0.22)"
+              rpy="$(optenv JACKAL_FLEA3_RPY 0 0 0)" />
+      <parent link="$(optenv JACKAL_FLEA_MOUNT front)_cover_link" />
+      <child link="$(optenv JACKAL_FLEA_MOUNT front)_camera_mount" />
+    </joint>
+    
+
+    <xacro:pointgrey_flea3 frame="$(optenv JACKAL_FLEA3_MOUNT front)_camera" name="$(optenv JACKAL_FLEA_NAME front)"
+      camera_x="0.0754" camera_y="0.029" camera_z="0.035"
+      camera_mass="0.98307" hfov="1.0471975512" fps="60" width="640" height="512"/>
+    <joint name="$(optenv JACKAL_FLEA3_MOUNT front)_camera_bracket_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="$(optenv JACKAL_FLEA3_MOUNT front)_camera_beam" />
+      <child link="$(optenv JACKAL_FLEA3_MOUNT front)_camera" />
+    </joint>
+
+  <link name="camera_visualtag">
+  </link>
+
+  <joint name="visualtag_joint" type="fixed">
+    <origin xyz="0 0 0"
+            rpy="-1.57 0 -1.57" />
+    <parent link="$(optenv JACKAL_FLEA3_MOUNT front)_camera" />
+    <child link="camera_visualtag" />
+  </joint>
+  </xacro:if>
+
+
+</robot>
+
+
