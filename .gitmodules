@@ -1,0 +1,9 @@
+[submodule "robomaster_sim/src/turtlebot3_simulations"]
+	path = robomaster_sim/src/turtlebot3_simulations
+	url = https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+[submodule "robomaster_sim/src/turtlebot3"]
+	path = robomaster_sim/src/turtlebot3
+	url = https://github.com/ROBOTIS-GIT/turtlebot3.git
+[submodule "robomaster_sim/src/turtlebot3_msgs"]
+	path = robomaster_sim/src/turtlebot3_msgs
+	url = https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
