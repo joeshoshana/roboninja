@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os,sys
 import PySimpleGUI as sg
 import glob
@@ -14,7 +15,7 @@ def run(cmd):
     os.system('xfce4-terminal -x '+cmd_fmt.format(cmd))
 
 command_pairs = [
-        ('install ROS','./ros_install.sh'),
+        ('pre_work','./pre_work.sh'),
         ('roscore','./roscore.sh'),
         ('launch','./launch.sh'),
         ('teleop','./teleop.sh'),
