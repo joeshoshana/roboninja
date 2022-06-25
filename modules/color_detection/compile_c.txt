@@ -1,0 +1,2 @@
+g++ -static -c -o detect_rectangles.o detect_rectangles.cpp
+g++ -static -shared -o detect_rectangles.so detect_rectangles.o 
