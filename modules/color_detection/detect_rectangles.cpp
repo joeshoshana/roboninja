@@ -13,7 +13,7 @@ extern "C"
         int cnt = 0;
         int min_r, min_c, max_r, max_c;
         for (int i = 0; i < rows; i++)
-            for (int j = 0; j < rows; j++)
+            for (int j = 0; j < cols; j++)
                 if (*(image + i * cols + j))
                 {
                     q.push(i * cols + j);

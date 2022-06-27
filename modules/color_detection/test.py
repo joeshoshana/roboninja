@@ -18,11 +18,11 @@ while(True):
     _, frame = cap.read()
 
     #blue color
-    # low_range = np.array([220,20,20])
-    # high_range = np.array([260,100,100])
+    low_range = np.array([220,20,20])
+    high_range = np.array([260,100,100])
     #red color
-    low_range = np.array([0,20,20])
-    high_range = np.array([11,100,100])
+    # low_range = np.array([0,20,20])
+    # high_range = np.array([11,100,100])
     low = fit_2_hsv(low_range)
     high = fit_2_hsv(high_range)
 
